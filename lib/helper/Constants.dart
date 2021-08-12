@@ -15,3 +15,7 @@ Image appLogo = Image.asset('res/assets/images/flutter_logo_rounded.png');
 // Sizes
 const bigRadius = 66.0;
 const buttonHeight = 24.0;
+
+// Pages
+const loginPageTag = 'Login Page';
+const homePageTag = 'Home Page';
