@@ -12,29 +12,27 @@ class HomePage extends StatefulWidget {
 class _HomeState extends State<HomePage> {
   final TextEditingController _filter = new TextEditingController();
 
-  late RecordList _filterList;
-  late RecordList _recordsList;
+  List<Record> _records = new List.empty();
+  List<Record> _filterRecords = new List.empty();
 
   String _searchText = "";
   Widget _appBarTitle = new Text(appTitle);
   Icon _searchIcon = new Icon(Icons.search);
 
   void _getRecords() async {
+
     RecordList records = await RecordService().loadRecords();
+
     setState(() {
-      for (Record record in records.records) {
-        this._recordsList.records.add(record);
-        this._filterList.records.add(record);
-      }
+
+      this._records = records.records;
+      this._filterRecords = records.records;
     });
   }
 
   @override
   void initState() {
     super.initState();
-
-    _filterList.records = new List<Record>.empty();
-    _recordsList.records = new List<Record>.empty();
 
     _getRecords();
   }
@@ -59,15 +57,15 @@ class _HomeState extends State<HomePage> {
 
   Widget _buildList(BuildContext context) {
     if (_searchText.isNotEmpty) {
-      _filterList.records = new List<Record>.empty();
-      for (int i = 0; i < _recordsList.records.length; i++) {
-        if (_recordsList.records[i].name
+      _filterRecords = new List<Record>.empty();
+      for (int i = 0; i < _records.length; i++) {
+        if (_records[i].name
                 .toLowerCase()
                 .contains(_searchText.toLowerCase()) ||
-            _recordsList.records[i].address
+            _records[i].address
                 .toLowerCase()
                 .contains(_searchText.toLowerCase())) {
-          _filterList.records.add(_recordsList.records[i]);
+          _filterRecords.add(_records[i]);
         }
       }
     }
@@ -75,8 +73,7 @@ class _HomeState extends State<HomePage> {
     return ListView(
       padding: const EdgeInsets.only(top: 20.0),
       children: this
-          ._filterList
-          .records
+          ._filterRecords
           .map((data) => _buildListItem(context, data))
           .toList(),
     );
