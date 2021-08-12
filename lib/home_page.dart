@@ -30,6 +30,33 @@ class _HomeState extends State<HomePage> {
     });
   }
 
+  void _resetRecords() {
+
+    this._filterRecords = this._records;
+  }
+
+  void _searchPressed() {
+    setState(() {
+      if (this._searchIcon.icon == Icons.search) {
+        this._searchIcon = new Icon(Icons.close);
+        this._appBarTitle = new TextField(
+          controller: _filter,
+          style: new TextStyle(color: Colors.white),
+          decoration: new InputDecoration(
+            prefixIcon: new Icon(Icons.search, color: Colors.white),
+            fillColor: Colors.white,
+            hintText: 'Search by name',
+            hintStyle: TextStyle(color: Colors.white),
+          ),
+        );
+      } else {
+        this._searchIcon = new Icon(Icons.search);
+        this._appBarTitle = new Text(appTitle);
+        _filter.clear();
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -39,6 +66,20 @@ class _HomeState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    _filter.addListener(() {
+      if (_filter.text.isEmpty) {
+        setState(() {
+          _searchText = "";
+          _resetRecords();
+        });
+      } else {
+        setState(() {
+          _searchText = _filter.text;
+        });
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
           elevation: 0.1,
@@ -47,7 +88,9 @@ class _HomeState extends State<HomePage> {
           title: _appBarTitle,
           leading: new IconButton(
             icon: _searchIcon,
-            onPressed: () {},
+            onPressed: () {
+              _searchPressed();
+            },
           )),
       backgroundColor: appDarkGreyColor,
       resizeToAvoidBottomInset: false,
@@ -56,8 +99,12 @@ class _HomeState extends State<HomePage> {
   }
 
   Widget _buildList(BuildContext context) {
+
     if (_searchText.isNotEmpty) {
+
+      List<Record> tempList = [];
       _filterRecords = new List<Record>.empty();
+
       for (int i = 0; i < _records.length; i++) {
         if (_records[i].name
                 .toLowerCase()
@@ -65,9 +112,10 @@ class _HomeState extends State<HomePage> {
             _records[i].address
                 .toLowerCase()
                 .contains(_searchText.toLowerCase())) {
-          _filterRecords.add(_records[i]);
+          tempList.add(_records[i]);
         }
       }
+      _filterRecords = tempList;
     }
 
     return ListView(
