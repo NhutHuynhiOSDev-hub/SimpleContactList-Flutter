@@ -40,6 +40,7 @@ dev_dependencies:
 flutter:
 
   assets:
+    - res/data/records.json
     - res/assets/images/flutter_logo_rounded.png
 
   uses-material-design: true
