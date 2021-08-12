@@ -1,3 +1,4 @@
+import 'package:contact_list/detail_page.dart';
 import 'package:contact_list/helper/Constants.dart';
 import 'package:contact_list/models/record.dart';
 import 'package:contact_list/models/record_list.dart';
@@ -172,7 +173,10 @@ class _HomeState extends State<HomePage> {
           ),
           trailing:
               Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => new DetailPage(record: record)));
+          },
         ),
       ),
     );
