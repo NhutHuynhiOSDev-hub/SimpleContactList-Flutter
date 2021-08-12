@@ -1,3 +1,4 @@
+import 'package:contact_list/LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'helper/Constants.dart';
 
@@ -13,6 +14,7 @@ class ContactListApp extends StatelessWidget {
         primaryColor: appDarkGreyColor
       ),
       debugShowCheckedModeBanner: false,
+      home: LoginPage(),
     );
   }
 }
