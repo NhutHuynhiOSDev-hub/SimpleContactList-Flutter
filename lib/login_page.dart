@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'helper/Constants.dart';
 
 class LoginPage extends StatelessWidget {
-
   final _pincodeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-
     final logo = CircleAvatar(
       backgroundColor: Colors.transparent,
       radius: bigRadius,
@@ -29,9 +27,7 @@ class LoginPage extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-      style: TextStyle(
-        color: Colors.white
-      ),
+      style: TextStyle(color: Colors.white),
     );
 
     final loginButton = Padding(
@@ -40,7 +36,9 @@ class LoginPage extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed(homePageTag);
+        },
         padding: EdgeInsets.all(12),
         color: appDarkGreyColor,
         child: Text(loginButtonText, style: TextStyle(color: Colors.white)),
